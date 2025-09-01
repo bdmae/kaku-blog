@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Post</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .delete-container { max-width: 500px; border: 1px solid #dc3545; padding: 20px; border-radius: 5px; }
+        .warning { color: #dc3545; font-weight: bold; }
+        .btn { padding: 10px 20px; margin-right: 10px; text-decoration: none; border-radius: 4px; border: none; cursor: pointer; }
+        .btn-danger { background: #dc3545; color: white; }
+        .btn-secondary { background: #6c757d; color: white; }
+    </style>
+</head>
+<body>
+    <div class="delete-container">
+        <h1>Delete Post</h1>
+        <p class="warning">Are you sure you want to delete "{{ post.title }}"?</p>
+        <p>This action cannot be undone.</p>
+        
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Confirm Delete</button>
+            <a href="{% url 'posts:post-list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</body>
+</html> 

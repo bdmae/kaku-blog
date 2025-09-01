@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ post.title }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .post { border: 1px solid #ddd; padding: 20px; border-radius: 5px; }
+        .actions { margin-top: 20px; }
+        .btn { padding: 8px 16px; margin-right: 10px; text-decoration: none; border-radius: 4px; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-warning { background: #ffc107; color: black; }
+        .btn-danger { background: #dc3545; color: white; }
+        .btn-secondary { background: #6c757d; color: white; }
+    </style>
+</head>
+<body>
+    <div class="post">
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.content }}</p>
+        <small>Created: {{ post.created_at|date:"M d, Y H:i" }}</small>
+        {% if post.updated_at != post.created_at %}
+            <br><small>Updated: {{ post.updated_at|date:"M d, Y H:i" }}</small>
+        {% endif %}
+        
+        <div class="actions">
+            <a href="{% url 'posts:post-list' %}" class="btn btn-secondary">Back to List</a>
+            <a href="{% url 'posts:post-update' post.pk %}" class="btn btn-warning">Edit</a>
+            <a href="{% url 'posts:post-delete' post.pk %}" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+</body>
+</html> 
