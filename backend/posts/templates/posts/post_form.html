@@ -92,7 +92,6 @@
     </div>
 
     <script>
-        // Simple Quill.js Editor - No React complexity
         document.addEventListener('DOMContentLoaded', function() {
             const toolbarOptions = [
                 [{ 'header': [1, 2, 3, false] }],
@@ -123,10 +122,14 @@
                 document.getElementById('content-field').value = content;
             });
 
-            // Simple slash commands - much more reliable
+            // smart slash commands - trigger when command is complete (no space needed)
+            let slashCommandTimeout;
             quill.on('text-change', function(delta, oldDelta, source) {
                 if (source === 'user') {
-                    setTimeout(() => {
+                    clearTimeout(slashCommandTimeout);
+                    
+                    // Set a new timeout to check for completed commands
+                    slashCommandTimeout = setTimeout(() => {
                         const text = quill.getText();
                         const selection = quill.getSelection();
                         
@@ -134,54 +137,58 @@
                             const cursorPos = selection.index;
                             const beforeCursor = text.substring(0, cursorPos);
                             
-                            // Look for slash command pattern
-                            const slashMatch = beforeCursor.match(/\/(\w+)\s*$/);
+                            // Look for slash command at the end of text (command is complete)
+                            const slashMatch = beforeCursor.match(/\/(\w+)$/);
                             if (slashMatch) {
                                 const command = slashMatch[1];
                                 const slashStart = cursorPos - slashMatch[0].length;
                                 
-                                // Delete the slash command
-                                quill.deleteText(slashStart, slashMatch[0].length);
+                                // Check if this is a valid command
+                                const validCommands = ['h1', 'h2', 'h3', 'bullet', 'ul', 'number', 'ol', 'quote', 'blockquote', 'code'];
                                 
-                                // Apply formatting
-                                switch (command.toLowerCase()) {
-                                    case 'h1':
-                                        quill.format('header', 1);
-                                        break;
-                                    case 'h2':
-                                        quill.format('header', 2);
-                                        break;
-                                    case 'h3':
-                                        quill.format('header', 3);
-                                        break;
-                                    case 'bullet':
-                                    case 'ul':
-                                        quill.format('list', 'bullet');
-                                        break;
-                                    case 'number':
-                                    case 'ol':
-                                        quill.format('list', 'ordered');
-                                        break;
-                                    case 'quote':
-                                    case 'blockquote':
-                                        quill.format('blockquote', true);
-                                        break;
-                                    case 'code':
-                                        quill.format('code-block', true);
-                                        break;
+                                if (validCommands.includes(command.toLowerCase())) {
+                                    // Delete the slash command
+                                    quill.deleteText(slashStart, slashMatch[0].length);
+                                    
+                                    // Apply formatting
+                                    switch (command.toLowerCase()) {
+                                        case 'h1':
+                                            quill.format('header', 1);
+                                            break;
+                                        case 'h2':
+                                            quill.format('header', 2);
+                                            break;
+                                        case 'h3':
+                                            quill.format('header', 3);
+                                            break;
+                                        case 'bullet':
+                                        case 'ul':
+                                            quill.format('list', 'bullet');
+                                            break;
+                                        case 'number':
+                                        case 'ol':
+                                            quill.format('list', 'ordered');
+                                            break;
+                                        case 'quote':
+                                        case 'blockquote':
+                                            quill.format('blockquote', true);
+                                            break;
+                                        case 'code':
+                                            quill.format('code-block', true);
+                                            break;
+                                    }
+                                    
+                                    quill.focus();
                                 }
-                                
-                                quill.focus();
                             }
                         }
-                    }, 100);
+                    }, 100); // Wait 100ms after user stops typing
                 }
             });
         });
     </script>
     
     <style>
-        /* Simple Quill Editor Styling */
         .ql-container {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
             font-size: 16px;
@@ -224,8 +231,10 @@
         }
         
         .ql-toolbar button.ql-active {
-            background: #0366d6;
-            color: white;
+            background: transparent;
+            color: #0366d6;
+            font-weight: bold;
+            font-size: 16px;
         }
         
         .ql-editor {

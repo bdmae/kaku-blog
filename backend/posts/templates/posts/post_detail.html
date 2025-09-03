@@ -16,7 +16,7 @@
 <body>
     <div class="post">
         <h1>{{ post.title }}</h1>
-        <p>{{ post.content }}</p>
+        <div class="post-content">{{ post.content|safe }}</div>
         <small>Created: {{ post.created_at|date:"M d, Y H:i" }}</small>
         {% if post.updated_at != post.created_at %}
             <br><small>Updated: {{ post.updated_at|date:"M d, Y H:i" }}</small>
