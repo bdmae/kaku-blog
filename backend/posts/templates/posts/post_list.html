@@ -1,37 +1,251 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Blog Posts</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaku Blog</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        .post { border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 5px; }
-        .actions { margin-top: 10px; }
-        .btn { padding: 8px 16px; margin-right: 10px; text-decoration: none; border-radius: 4px; }
-        .btn-primary { background: #007bff; color: white; }
-        .btn-success { background: #28a745; color: white; }
-        .btn-warning { background: #ffc107; color: black; }
-        .btn-danger { background: #dc3545; color: white; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #242424;
+            background: #fff;
+        }
+        
+        .header {
+            border-bottom: 1px solid #e6e6e6;
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+        
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #242424;
+            text-decoration: none;
+        }
+        
+        .create-btn {
+            background: #1a8917;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        .create-btn:hover {
+            background: #0f730c;
+        }
+        
+        .posts-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .post-card {
+            border-bottom: 1px solid #e6e6e6;
+            padding: 32px 0;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        
+        .post-card:hover {
+            opacity: 0.8;
+        }
+        
+        .post-card:last-child {
+            border-bottom: none;
+        }
+        
+        .post-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: #757575;
+        }
+        
+        .post-author {
+            font-weight: 500;
+            color: #242424;
+        }
+        
+        .post-date {
+            margin-left: 8px;
+        }
+        
+        .post-title {
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 8px;
+            color: #242424;
+            text-decoration: none;
+        }
+        
+        .post-title:hover {
+            color: #1a8917;
+        }
+        
+        .post-excerpt {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #757575;
+            margin-bottom: 16px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .post-excerpt h1, .post-excerpt h2, .post-excerpt h3 {
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0;
+            color: #757575;
+        }
+        
+        .post-excerpt p {
+            margin: 0;
+        }
+        
+        .post-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .tag {
+            background: #f2f2f2;
+            color: #757575;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            text-decoration: none;
+        }
+        
+        .post-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .action-btn {
+            padding: 6px 12px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .action-btn.primary {
+            background: #1a8917;
+            color: white;
+        }
+        
+        .action-btn.primary:hover {
+            background: #0f730c;
+        }
+        
+        .action-btn.secondary {
+            background: #f2f2f2;
+            color: #757575;
+        }
+        
+        .action-btn.secondary:hover {
+            background: #e6e6e6;
+        }
+        
+        .action-btn.danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .action-btn.danger:hover {
+            background: #c82333;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: #757575;
+        }
+        
+        .empty-state h2 {
+            font-size: 24px;
+            margin-bottom: 16px;
+            color: #242424;
+        }
+        
+        .empty-state p {
+            font-size: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .empty-state .create-btn {
+            font-size: 16px;
+            padding: 12px 24px;
+        }
     </style>
 </head>
 <body>
-    <h1>Blog Posts</h1>
-    <a href="{% url 'posts:post-create' %}" class="btn btn-success">Create New Post</a>
-    
-    {% if posts %}
-        {% for post in posts %}
-            <div class="post">
-                <h2>{{ post.title }}</h2>
-                <div class="post-content">{{ post.content|safe|truncatewords_html:30 }}</div>
-                <small>Created: {{ post.created_at|date:"M d, Y" }}</small>
-                <div class="actions">
-                    <a href="{% url 'posts:post-detail' post.pk %}" class="btn btn-primary">View</a>
-                    <a href="{% url 'posts:post-update' post.pk %}" class="btn btn-warning">Edit</a>
-                    <a href="{% url 'posts:post-delete' post.pk %}" class="btn btn-danger">Delete</a>
-                </div>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="{% url 'posts:post-list' %}" class="logo">Kaku Blog</a>
+                <a href="{% url 'posts:post-create' %}" class="create-btn">Write</a>
             </div>
-        {% endfor %}
-    {% else %}
-        <p>No posts yet. <a href="{% url 'posts:post-create' %}">Create your first post!</a></p>
-    {% endif %}
+        </div>
+    </header>
+    
+    <main class="posts-container">
+        {% if posts %}
+            {% for post in posts %}
+                <article class="post-card" onclick="window.location.href='{% url 'posts:post-detail' post.pk %}'">
+                    <div class="post-meta">
+                        <span class="post-author">Kaku Blog</span>
+                        <span class="post-date">{{ post.created_at|date:"M d" }}</span>
+                    </div>
+                    
+                    <h2 class="post-title">{{ post.title }}</h2>
+                    
+                    <div class="post-excerpt">
+                        {{ post.content|safe|truncatewords_html:30 }}
+                    </div>
+                    
+                    <div class="post-actions" onclick="event.stopPropagation()">
+                        <a href="{% url 'posts:post-detail' post.pk %}" class="action-btn primary">Read more</a>
+                        <a href="{% url 'posts:post-update' post.pk %}" class="action-btn secondary">Edit</a>
+                        <a href="{% url 'posts:post-delete' post.pk %}" class="action-btn danger">Delete</a>
+                    </div>
+                </article>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <h2>No stories yet</h2>
+                <p>Start writing your first story and share it with the world.</p>
+                <a href="{% url 'posts:post-create' %}" class="create-btn">Write your first story</a>
+            </div>
+        {% endif %}
+    </main>
 </body>
 </html> 
