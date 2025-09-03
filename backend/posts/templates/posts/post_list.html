@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaku Blog</title>
+    <title>KaKu</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -40,7 +40,7 @@
         }
         
         .create-btn {
-            background: #1a8917;
+            background: #3d258a;
             color: white;
             padding: 8px 16px;
             border-radius: 20px;
@@ -51,7 +51,7 @@
         }
         
         .create-btn:hover {
-            background: #0f730c;
+            background: #2a1a5e;
         }
         
         .posts-container {
@@ -102,7 +102,7 @@
         }
         
         .post-title:hover {
-            color: #1a8917;
+            color: #3d258a;
         }
         
         .post-excerpt {
@@ -158,12 +158,12 @@
         }
         
         .action-btn.primary {
-            background: #1a8917;
+            background: #3d258a;
             color: white;
         }
         
         .action-btn.primary:hover {
-            background: #0f730c;
+            background: #2a1a5e;
         }
         
         .action-btn.secondary {
@@ -178,6 +178,7 @@
         .action-btn.danger {
             background: #dc3545;
             color: white;
+            padding: 6px 12px;
         }
         
         .action-btn.danger:hover {
@@ -211,7 +212,7 @@
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <a href="{% url 'posts:post-list' %}" class="logo">Kaku Blog</a>
+                <a href="{% url 'posts:post-list' %}" class="logo">KaKu</a>
                 <a href="{% url 'posts:post-create' %}" class="create-btn">Write</a>
             </div>
         </div>
@@ -235,7 +236,7 @@
                     <div class="post-actions" onclick="event.stopPropagation()">
                         <a href="{% url 'posts:post-detail' post.pk %}" class="action-btn primary">Read more</a>
                         <a href="{% url 'posts:post-update' post.pk %}" class="action-btn secondary">Edit</a>
-                        <a href="{% url 'posts:post-delete' post.pk %}" class="action-btn danger">Delete</a>
+                        <a href="{% url 'posts:post-delete' post.pk %}" class="action-btn danger">Remove</a>
                     </div>
                 </article>
             {% endfor %}

@@ -119,7 +119,7 @@
             font-weight: 400;
         }
         .btn { 
-            background: #1a8917; 
+            background: #3d258a; 
             color: white; 
             padding: 12px 24px; 
             border: none; 
@@ -132,7 +132,7 @@
             transition: all 0.2s;
         }
         .btn:hover { 
-            background: #0f730c; 
+            background: #2a1a5e; 
         }
         .btn-secondary { 
             background: #f2f2f2; 
@@ -156,7 +156,7 @@
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <a href="{% url 'posts:post-list' %}" class="logo">Kaku Blog</a>
+                <a href="{% url 'posts:post-list' %}" class="logo">KaKu</a>
                 <a href="{% url 'posts:post-list' %}" class="back-btn">← Back to stories</a>
             </div>
         </div>
@@ -211,7 +211,6 @@
 
             const quill = new Quill('#editor-container', {
                 theme: 'snow',
-                placeholder: 'Start writing...',
                 modules: {
                     toolbar: toolbarOptions
                 }
@@ -424,17 +423,7 @@
             background: #6c757d;
         }
         
-        .ql-editor.ql-blank::before {
-            content: "Start writing... Type /h1, /h2, /bullet, etc. for commands";
-            color: #adb5bd;
-            font-style: italic;
-            left: 60px;
-            top: 50px;
-            position: absolute;
-            z-index: 1;
-            pointer-events: none;
-            white-space: nowrap;
-        }
+
         
         .ql-editor h1 {
             font-size: 2.2em;

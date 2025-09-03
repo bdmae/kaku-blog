@@ -196,12 +196,12 @@
         }
         
         .action-btn.primary {
-            background: #1a8917;
+            background: #3d258a;
             color: white;
         }
         
         .action-btn.primary:hover {
-            background: #0f730c;
+            background: #2a1a5e;
         }
         
         .action-btn.secondary {
@@ -216,6 +216,7 @@
         .action-btn.danger {
             background: #dc3545;
             color: white;
+            padding: 12px 24px;
         }
         
         .action-btn.danger:hover {
@@ -249,7 +250,7 @@
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <a href="{% url 'posts:post-list' %}" class="logo">Kaku Blog</a>
+                <a href="{% url 'posts:post-list' %}" class="logo">KaKu</a>
                 <a href="{% url 'posts:post-list' %}" class="back-btn">← Back to stories</a>
             </div>
         </div>
@@ -259,7 +260,7 @@
         <article>
             <header class="article-header">
                 <div class="article-meta">
-                    <span class="article-author">Kaku Blog</span>
+                    <span class="article-author">KaKu</span>
                     <span class="article-date">{{ post.created_at|date:"M d, Y" }}</span>
                     {% if post.updated_at != post.created_at %}
                         <span class="article-date">• Updated {{ post.updated_at|date:"M d, Y" }}</span>
@@ -276,7 +277,7 @@
             <footer class="article-actions">
                 <a href="{% url 'posts:post-list' %}" class="action-btn secondary">← All stories</a>
                 <a href="{% url 'posts:post-update' post.pk %}" class="action-btn primary">Edit story</a>
-                <a href="{% url 'posts:post-delete' post.pk %}" class="action-btn danger">Delete</a>
+                <a href="{% url 'posts:post-delete' post.pk %}" class="action-btn danger">Remove</a>
             </footer>
         </article>
     </main>
